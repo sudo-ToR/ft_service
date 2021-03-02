@@ -1,6 +1,6 @@
 openrc boot
-rc-service influxdb start
+rc-service -S influxdb start
 #  influx -execute 'create database telegraf'
 # create databases telegraf
 # create user telegraf with password telegraf
-rc-service telegraf start
+rc-service -S telegraf start

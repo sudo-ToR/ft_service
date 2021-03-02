@@ -7,6 +7,6 @@ su - wp -c 'wp user create test3 test3@example.com --role=contributor --path=/ww
 openrc boot
 rc-update add nginx default
 rc-update add php-fpm7 default
-rc-service php-fpm7 start
-rc-service nginx start
+rc-service -S php-fpm7 start
+rc-service -S nginx start
 
