@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    setup.sh                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tor <tor@student.42.fr>                    +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/07 15:46:05 by tor               #+#    #+#              #
-#    Updated: 2021/03/02 11:50:21 by tor              ###   ########.fr        #
+#    Updated: 2021/03/02 11:56:19 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 
+sudo usermode -aG docker $(whoami)
 minikube delete
 docker system prune -f
 minikube config set kubernetes-version 1.18.0
@@ -22,7 +23,7 @@ minikube dashboard&
 #################################################################################
 #                                   MetalLb configuration                       #
 #################################################################################
-kubectl apply -f srcs/amespace.yaml
+kubectl apply -f srcs/namespace.yaml
 kubectl apply -f srcs/metallb.yaml
 # kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
 # kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
