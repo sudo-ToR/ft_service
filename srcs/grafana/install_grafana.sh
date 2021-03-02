@@ -1,0 +1,1 @@
+mkdir /etc/grafana/provisioning/datasource

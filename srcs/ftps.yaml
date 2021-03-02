@@ -1,0 +1,50 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    ftps.yaml                                          :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tor <tor@student.42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/02/12 12:57:29 by tor               #+#    #+#              #
+#    Updated: 2021/02/26 15:47:08 by tor              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftps
+  annotations:
+    metallb.universe.tf/allow-shared-ip: phpmyadmin
+spec:
+  selector:
+    app: ftps
+  ports:
+    - name: ftp
+      port: 21
+    - name: ftpbis
+      port: 20
+    - name: ftppassiv
+      port: 30000
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps
+spec:
+  selector:
+    matchLabels:
+      app: ftps
+  template:
+    metadata:
+      labels:
+        app: ftps
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: ftps
+        image: bestftps
+        imagePullPolicy : Never
+        ports:
+        - containerPort: 21

@@ -1,0 +1,55 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    nginx.yaml                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tor <tor@student.42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/02/17 19:02:12 by tor               #+#    #+#              #
+#    Updated: 2021/02/26 15:47:24 by tor              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  annotations:
+    metallb.universe.tf/allow-shared-ip: phpmyadmin
+    # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: (https|http|ssl|tcp)
+    # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    # service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+spec:
+  selector:
+    app: nginx
+  ports:
+    - name: http
+      port: 80
+    - name: https
+      port: 443
+      targetPort: https
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: nginx
+        image: bestnginx
+        imagePullPolicy : Never
+        ports:
+          - containerPort: 80
+            name: http
+          - containerPort: 443
+            name: https
