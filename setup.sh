@@ -6,13 +6,13 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/07 15:46:05 by tor               #+#    #+#              #
-#    Updated: 2021/03/02 11:56:19 by user42           ###   ########.fr        #
+#    Updated: 2021/03/02 13:01:23 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 
-sudo usermode -aG docker $(whoami)
+sudo usermod -aG docker $(whoami)
 minikube delete
 docker system prune -f
 minikube config set kubernetes-version 1.18.0
