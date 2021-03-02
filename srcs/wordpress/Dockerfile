@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tor <tor@student.42.fr>                    +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 19:56:32 by tor               #+#    #+#              #
-#    Updated: 2021/02/06 20:57:46 by tor              ###   ########.fr        #
+#    Updated: 2021/03/02 14:43:06 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,32 @@ RUN apk update && apk upgrade \
     php7-soap php7-xmlrpc php7-posix php7-mcrypt php7-gettext php7-ldap \
     php7-ctype php7-dom php7-fpm php7-session php7-phar sudo curl
 
+RUN mkdir /run/nginx && mkdir -p www/wp
 
 COPY install_wordpress.sh /tmp
 COPY nginx.conf /etc/nginx
 COPY wp-config.php /tmp
 
-CMD sh /tmp/install_wordpress.sh && tail -f /etc/passwd
+RUN adduser -D -g 'wp' wp \
+    && chown -R wp:wp /www/ \
+    && chown -R nginx /www/
+
+RUN cd /tmp \
+    && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x /tmp/wp-cli.phar \
+    && mv /tmp/wp-config.php /www/wp
+
+RUN cd /www/wp \
+    && mv /tmp/wp-cli.phar /usr/local/bin/wp
+
+RUN chmod -R 777 /www/ \ 
+    && su - wp -c 'wp core download --path=/www/wp' \
+    && su - wp -c 'wp core install --url=172.17.0.2:5050 --title=Example --admin_user=admin --admin_password=password --admin_email=info@example.com --skip-email --path=/www/wp/' \
+    && su - wp -c 'wp user create test1 test1@example.com --role=author --path=/www/wp' \
+    && su - wp -c 'wp user create test2 test2@example.com --role=editor --path=/www/wp' \
+    && su - wp -c 'wp user create test3 test3@example.com --role=contributor --path=/www/wp'
+
+
+CMD sh /tmp/install_wordpress.sh
 
 EXPOSE 5050

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tor <tor@student.42.fr>                    +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 19:56:28 by tor               #+#    #+#              #
-#    Updated: 2021/02/25 17:47:03 by tor              ###   ########.fr        #
+#    Updated: 2021/03/02 14:08:11 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,6 @@ COPY install_phpmyadmin.sh /tmp
 COPY nginx.conf /tmp
 COPY config.inc.php /tmp
 
-CMD sh /tmp/install_phpmyadmin.sh && tail -f /etc/passwd
+CMD sh /tmp/install_phpmyadmin.sh
 
 EXPOSE 5000
