@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 20:40:32 by tor               #+#    #+#              #
-#    Updated: 2021/03/02 14:07:59 by user42           ###   ########.fr        #
+#    Updated: 2021/03/02 14:58:19 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,6 @@ COPY mysql_install.sh /tmp
 COPY mysql_users.sql /tmp
 COPY my.cnf /etc/
 
-CMD sh /tmp/mysql_install.sh
+CMD sh /tmp/mysql_install.sh && tail -f /etc/passwd
 
 EXPOSE 3306

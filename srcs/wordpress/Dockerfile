@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 19:56:32 by tor               #+#    #+#              #
-#    Updated: 2021/03/02 14:43:06 by user42           ###   ########.fr        #
+#    Updated: 2021/03/02 14:58:25 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,13 +40,8 @@ RUN cd /www/wp \
     && mv /tmp/wp-cli.phar /usr/local/bin/wp
 
 RUN chmod -R 777 /www/ \ 
-    && su - wp -c 'wp core download --path=/www/wp' \
-    && su - wp -c 'wp core install --url=172.17.0.2:5050 --title=Example --admin_user=admin --admin_password=password --admin_email=info@example.com --skip-email --path=/www/wp/' \
-    && su - wp -c 'wp user create test1 test1@example.com --role=author --path=/www/wp' \
-    && su - wp -c 'wp user create test2 test2@example.com --role=editor --path=/www/wp' \
-    && su - wp -c 'wp user create test3 test3@example.com --role=contributor --path=/www/wp'
+    && su - wp -c 'wp core download --path=/www/wp'
 
-
-CMD sh /tmp/install_wordpress.sh
+CMD sh /tmp/install_wordpress.sh && tail -f /etc/passwd
 
 EXPOSE 5050

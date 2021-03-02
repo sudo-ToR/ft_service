@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/17 16:00:53 by tor               #+#    #+#              #
-#    Updated: 2021/03/02 14:08:05 by user42           ###   ########.fr        #
+#    Updated: 2021/03/02 14:58:15 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,6 @@ COPY install_nginx.sh /tmp
 COPY nginx.conf /tmp
 
 
-CMD sh /tmp/install_nginx.sh
+CMD sh /tmp/install_nginx.sh && tail -f /etc/passwd
 
 EXPOSE 80 443
