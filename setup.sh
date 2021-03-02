@@ -6,13 +6,25 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/07 15:46:05 by tor               #+#    #+#              #
-#    Updated: 2021/03/02 13:01:23 by user42           ###   ########.fr        #
+#    Updated: 2021/03/02 13:20:12 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 
-sudo usermod -aG docker $(whoami)
+user=$(whoami)
+id -nG $user | grep docker >> /dev/null 2>> /dev/null
+
+permission=$?
+
+if [ $permission -ne 0 ]; then
+	echo "Permission are not correctly set up\nYou need to enter password to grant the good permissions : "
+	sudo usermod -aG docker $user 2>> /dev/null
+	echo "You need to log out to flush permissions"
+	exit 0
+fi
+
+
 minikube delete
 docker system prune -f
 minikube config set kubernetes-version 1.18.0
