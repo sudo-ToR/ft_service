@@ -4,9 +4,3 @@ su - wp -c 'wp core install --url=172.17.0.2:5050 --title=Example --admin_user=a
 su - wp -c 'wp user create test1 test1@example.com --role=author --path=/www/wp' 
 su - wp -c 'wp user create test2 test2@example.com --role=editor --path=/www/wp' 
 su - wp -c 'wp user create test3 test3@example.com --role=contributor --path=/www/wp'
-openrc boot
-rc-update add nginx default
-rc-update add php-fpm7 default
-rc-service -S php-fpm7 start
-rc-service -S nginx start
-

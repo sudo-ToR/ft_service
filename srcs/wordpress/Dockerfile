@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 19:56:32 by tor               #+#    #+#              #
-#    Updated: 2021/03/02 14:58:25 by user42           ###   ########.fr        #
+#    Updated: 2021/03/03 14:18:48 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FROM alpine
 LABEL maintainer=lnoirot@student.42.fr
 
 RUN apk update && apk upgrade \
-    && apk add nginx openrc \
+    && apk add nginx supervisor\
     && apk add php7-common php7-iconv php7-json php7-gd php7-curl \
     php7-xml php7-mysqli php7-imap php7-cgi php7-pdo php7-pdo_mysql \
     php7-soap php7-xmlrpc php7-posix php7-mcrypt php7-gettext php7-ldap \
@@ -26,6 +26,7 @@ RUN mkdir /run/nginx && mkdir -p www/wp
 COPY install_wordpress.sh /tmp
 COPY nginx.conf /etc/nginx
 COPY wp-config.php /tmp
+COPY supervisord.conf /etc/
 
 RUN adduser -D -g 'wp' wp \
     && chown -R wp:wp /www/ \
@@ -42,6 +43,6 @@ RUN cd /www/wp \
 RUN chmod -R 777 /www/ \ 
     && su - wp -c 'wp core download --path=/www/wp'
 
-CMD sh /tmp/install_wordpress.sh && tail -f /etc/passwd
+CMD sh /tmp/install_wordpress.sh && supervisord -n
 
 EXPOSE 5050
