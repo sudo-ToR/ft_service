@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tor <tor@student.42.fr>                    +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/27 17:06:44 by tor               #+#    #+#              #
-#    Updated: 2021/02/05 12:09:37 by tor              ###   ########.fr        #
+#    Updated: 2021/03/03 15:58:44 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ ENV INFLUXDB_USER_PASSWORD=telegraf
 
 RUN apk update && apk upgrade \
     && apk add influxdb --no-cache \
-    && apk add openrc
+    && apk add openrc supervisor
 
 RUN apk add --repository http://nl.alpinelinux.org/alpine/edge/community telegraf
 
@@ -33,8 +33,9 @@ RUN apk add --repository http://nl.alpinelinux.org/alpine/edge/community influxd
 COPY install_influx.sh /tmp
 COPY telegraf.conf /etc/
 COPY influxdb.conf /etc/
+COPY supervisord.conf /etc/
 
-CMD  sh /tmp/install_influx.sh && telegraf --debug
+CMD  sh /tmp/install_influx.sh && supervisord -n
 
 
 EXPOSE 8086
