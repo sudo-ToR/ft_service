@@ -15,6 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -32,7 +33,7 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
         "y": 0
@@ -88,7 +89,7 @@
             [
               {
                 "params": [
-                  "usage_system"
+                  "usage_user"
                 ],
                 "type": "field"
               },
@@ -98,20 +99,14 @@
               }
             ]
           ],
-          "tags": [
-            {
-              "key": "cpu",
-              "operator": "=",
-              "value": "cpu-total"
-            }
-          ]
+          "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "mysql",
+      "title": "Panel Title",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -127,7 +122,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:79",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -136,7 +130,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:80",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -163,7 +156,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "mysql",
-  "uid": "mysql",
-  "version": 8
+  "title": "Mysql",
+  "uid": null,
+  "version": 0
 }
