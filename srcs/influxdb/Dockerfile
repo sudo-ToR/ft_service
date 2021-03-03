@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/27 17:06:44 by tor               #+#    #+#              #
-#    Updated: 2021/03/03 15:58:44 by user42           ###   ########.fr        #
+#    Updated: 2021/03/03 18:46:15 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ COPY telegraf.conf /etc/
 COPY influxdb.conf /etc/
 COPY supervisord.conf /etc/
 
-CMD  sh /tmp/install_influx.sh && supervisord -n
+CMD supervisord -n
 
 
 EXPOSE 8086
